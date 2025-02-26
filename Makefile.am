@@ -1,7 +1,7 @@
 ## Process this file with automake to generate Makefile.in
 ACLOCAL_AMFLAGS = -I m4
 SUBDIRS = libcpputils libgixpp gixpp runtime/libgixsql
-EXTRA_DIST = copy/SQLCA.cpy misc/gixsql-wrapper \
+EXTRA_DIST = copy/SQLCA.cpy misc/gixsql-wrapper misc/gixsql.cmd \
              README TESTING.md doc examples extra_files.mk
 CLEANFILES = *~
 
