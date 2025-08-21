@@ -13,7 +13,6 @@ env:
   GIXSQLMIN: 0
   GIXSQLREL: 21dev
   GIX_REVISION: ${{ github.run_attempt }}
-  GIXSQL_BRANCH: ${{ github.ref_name }}
   INSTALL_PREFIX: usr
   HOST_PLATFORM: x64   
   
@@ -29,10 +28,7 @@ jobs:
     runs-on: ubuntu-20.04
     
     steps:
-    - uses: actions/checkout@v3
-      with:
-          repository: 'mridoni/gixsql'
-          ref: ${{ env.GIXSQL_BRANCH }}
+    - uses: actions/checkout@v4
     
 #    - uses: awalsh128/cache-apt-pkgs-action@latest
 #      with:
@@ -48,7 +44,7 @@ jobs:
       run: |
         wget http://ftp.debian.org/debian/pool/main/b/bison/bison_3.7.5+dfsg-1_amd64.deb
         sudo dpkg -i bison_3.7.5+dfsg-1_amd64.deb      
-        chmod 755 prepdist.sh && ./prepdist.sh
+        ./prepdist.sh
         autoreconf --install --force
         ./configure --prefix=${{ github.workspace }}/pkg/${{ env.INSTALL_PREFIX }}
         make -j$(nproc) && make install-strip
@@ -78,10 +74,7 @@ jobs:
     runs-on: ubuntu-22.04
     
     steps:
-    - uses: actions/checkout@v3
-      with:
-          repository: 'mridoni/gixsql'
-          ref: ${{ env.GIXSQL_BRANCH }}
+    - uses: actions/checkout@v4
     
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
@@ -91,8 +84,8 @@ jobs:
     - name: Build GixSQL
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: |
-        chmod 755 ./prepbuild.sh && ./prepbuild.sh /E
-        chmod 755 ./prepdist.sh && ./prepdist.sh
+        ./prepbuild.sh /E
+        ./prepdist.sh
         autoreconf --install --force
         ./configure --prefix=${{ github.workspace }}/pkg/${{ env.INSTALL_PREFIX }}
         make -j$(nproc) && make install-strip
@@ -121,10 +114,7 @@ jobs:
     runs-on: ubuntu-24.04
     
     steps:
-    - uses: actions/checkout@v3
-      with:
-          repository: 'mridoni/gixsql'
-          ref: ${{ env.GIXSQL_BRANCH }}
+    - uses: actions/checkout@v4
     
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
@@ -134,8 +124,8 @@ jobs:
     - name: Build GixSQL
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: |
-        chmod 755 ./prepbuild.sh && ./prepbuild.sh /E
-        chmod 755 ./prepdist.sh && ./prepdist.sh
+        ./prepbuild.sh /E
+        ./prepdist.sh
         autoreconf --install --force
         ./configure --prefix=${{ github.workspace }}/pkg/${{ env.INSTALL_PREFIX }}
         make -j$(nproc) && make install-strip
